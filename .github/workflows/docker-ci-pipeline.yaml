@@ -1,1 +1,26 @@
+name: Docker CI pipeline
+run-name: ${{github.actor}} is running out Docker CI pipeline
+on: [push]
+jobs:
+  docker-build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone the code
+        uses: actions/checkout@v6
+      - name: Docker Build
+        run: docker build -t saibabu492/helloworld-python:v1 .
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Docker push
+        run: docker push saibabu492/helloworld-python:v1
+
+      - name: Docker run 
+        run: docker run --name helloworld-python -itd -p 8080:8080 saibabu492/helloworld-python:v1
+
+      - name: view the container
+        run: docker ps
