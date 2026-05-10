@@ -18,7 +18,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+          image-ref: '${{vars.DOCKERHUB_USERNAME}}/helloworld-python:v1'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
