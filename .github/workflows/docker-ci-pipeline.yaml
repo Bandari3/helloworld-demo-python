@@ -7,6 +7,11 @@ jobs:
     steps:
       - name: clone the code
         uses: actions/checkout@v6
+      - name: Lint Dockerfile with Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          config: .hadolint.yaml
       - name: Docker Build
         run: docker build -t ${{vars.DOCKERHUB_USERNAME}}/helloworld-python:v1 .
         
