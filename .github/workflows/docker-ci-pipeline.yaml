@@ -39,3 +39,27 @@ jobs:
 
       - name: view the container
         run: docker ps
+
+  k8s-implementation:
+    needs: docker-build-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone the code
+        uses: actions/checkout@v6
+
+      - name: start minikube
+        uses: medyagh/setup-minikube@latest 
+
+      - name: Try the cluster!
+        run: kubectl get pods -A
+
+      - name: Create a deployment
+        run: |
+          kubectl apply -f manifests/deployment.yaml
+          kubectl apply -f manifests/service.yaml
+          kubectl wait --for=condition=ready pod -l app=helloworld-python-deployment
+
+      - name: view the deployment and service
+        run: |
+          kubectl get deployments
+          kubectl get services    
