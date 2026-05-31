@@ -1,0 +1,10 @@
+.vscode/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.env
+
+# Local terminal and editor artifacts
+*.log
+*.tmp
